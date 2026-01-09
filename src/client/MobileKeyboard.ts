@@ -3,6 +3,9 @@ import { canvas, canvas2d } from '#/graphics/Canvas.js';
 // ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!"£$%^&*()-_=+[{]};:\'@#~,<.>/?\\| 
 // ^ Allowed characters in client
 
+// Default username for login prefilling
+const DEFAULT_USERNAME = 'Moelanz';
+
 const KEYMAP_REGULAR = [
     'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p',  // 10 chars
     'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l',  // 9 chars
@@ -100,6 +103,11 @@ class MobileKeyboard {
         } else {
             this.mode = UserKeyboardMode.Hybrid;
         }
+        
+        // Set default username in localStorage for login screen prefilling
+        localStorage.setItem('last_username', DEFAULT_USERNAME);
+        localStorage.setItem('lastLogin', DEFAULT_USERNAME);
+        localStorage.setItem('username', DEFAULT_USERNAME);
     }
 
     public show(originX?: number, originY?: number, clientX?: number, clientY?: number) {
@@ -513,6 +521,8 @@ class NativeMobileKeyboard implements Keyboard {
         this.virtualInputElement.setAttribute('autocorrect', 'off');
         this.virtualInputElement.setAttribute('autocapitalize', 'off');
         this.virtualInputElement.setAttribute('style', 'position: fixed; top: 0px; left: 0px; width: 1px; height: 1px; opacity: 0;');
+        // Set initial value to default username
+        this.virtualInputElement.value = DEFAULT_USERNAME;
         if (this.isAndroid) {
             // Android uses `input` event for text entry rathern than `keydown` / `keyup`
 
@@ -564,6 +574,8 @@ class NativeMobileKeyboard implements Keyboard {
             this.virtualInputElement.style.left = `${originX}px`;
             this.virtualInputElement.style.top = `${originY}px`;
         }
+        // Ensure default username is set when showing keyboard
+        this.virtualInputElement.value = DEFAULT_USERNAME;
         canvas.blur();
         this.virtualInputElement.focus();
         this.virtualInputElement.click();
