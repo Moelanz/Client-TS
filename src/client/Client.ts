@@ -2096,7 +2096,7 @@ export class Client extends GameShell {
                 this.pendingLogout = 250;
                 this.idleCycle += 10_000; // 10s backoff
 
-                this.out.pIsaac(ClientProt.IDLE_TIMER);
+                // this.out.pIsaac(ClientProt.IDLE_TIMER);
             }
 
             this.macroCameraCycle++;
