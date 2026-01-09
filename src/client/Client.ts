@@ -547,6 +547,7 @@ export class Client extends GameShell {
             return;
         }
 
+        console.log('Log');
         console.log(`RS2 user client - release #${Constants.CLIENT_VERSION}`);
 
         Client.nodeId = nodeid;
